@@ -246,7 +246,7 @@ namespace DesafioPlacarGP_Mentes
                 }
                 else
                 {
-                    if (valor != (numeroJogador -1))
+                    if (valor == (numeroJogador -1))
                     {
                         Console.WriteLine("Entrada inválida para o Jogador {0} digite apernas {1}", numeroJogador, numeroJogador-1);
                     }
