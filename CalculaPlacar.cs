@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DesafioPlacarGP_Mentes
 {
@@ -39,27 +37,18 @@ namespace DesafioPlacarGP_Mentes
 
         }
 
-        public static void CalcularVencedorRandom()
+        public static string CalcularVencedorRandom()
         {
-            Stopwatch stopwatch = new Stopwatch();
-            Console.Clear();
-            Console.WriteLine("------------------------------ " + DateTime.Now + " ---------------------");
-            Console.WriteLine();
-
-            stopwatch.Start();
-
-            Console.WriteLine("------------------------------ Executando placar randomico -------------------");
-            Console.WriteLine();
             long totalPontos = 100000000;
             long[] placar = PlacarRandom(totalPontos);
-            long contador = (totalPontos / 2) +1;
-            bool teste = true;
+            // para saber matematicamente quem e o vencedor com isso posso decidir se encerro o loop
+            long contador = (totalPontos / 2) + 1;
             long player1=0;
             long player2=0;
 
             for (long i = 0; i < totalPontos; i++)
             {
-                if (placar[i].Equals( 1))
+                if (placar[i].Equals(1))
                 {
                     player1++;
                 }
@@ -68,63 +57,28 @@ namespace DesafioPlacarGP_Mentes
                     player2++;
                 }
 
-                if (i >= contador ) 
+                if (i > contador ) 
                 {
-                    if (player1 >= contador && teste)
+                    if (player1 > contador)
                     {
-                        Console.WriteLine("Jogador 1 e o vencedor, calculando o placar");
-                        Console.WriteLine();
-                        contador = 0;
-                        teste = false;
+                        return "Jogador 1 Venceu";
                     }
-                    else if (player2 >= contador && teste)
+                    else if (player2 > contador )
                     {
-                        Console.WriteLine("Jogador 2 e o vencedor, calculando o placar");
-                        Console.WriteLine();
-                        contador = 0;
-                        teste = false;
+                        return "Jogador 2 Venceu";
                     }
                 }
             }
 
-            if ((player1 > player2) && !teste)
-            {
-                Console.WriteLine("Jogador 1 placar: {0}  X Jogador 2 placar: {1}", player1, player2);
-            }
-            else if ( (player1 < player2) && !teste)
-            {
-                Console.WriteLine("Jogador 2 placar: {0}  X Jogador 1 placar: {1}", player2, player1);
-            }
-            else
-            {
-                Console.WriteLine("Empate! -> " + " Jogador 1 placar: {0}  X Jogador 2 placar: {1}", player1, player2);
-            }
-
-            stopwatch.Stop();
-
-            Console.WriteLine();
-            Console.WriteLine($"Tempo total: {stopwatch.ElapsedMilliseconds} ms");
-            Console.WriteLine();
-            Console.WriteLine("------------------------------ " + DateTime.Now + " ---------------------");
-            Console.WriteLine("Pressione qualquer tecla para retornar ao menu principal");
-            Console.ReadKey();
+            return "Empate! ";
         }
 
-        public static void CalcularVencedor(long size)
+        public static string CalcularVencedor(long size)
         {
-            Stopwatch stopwatch = new Stopwatch();
-            Console.Clear();
-            Console.WriteLine("------------------------------ " + DateTime.Now + " ---------------------");
-            Console.WriteLine();
-
-            stopwatch.Start();
-
-            Console.WriteLine("------------------------------ Executando placar randomico -------------------");
-            Console.WriteLine();
-            
             long[] placar = PlacarRandom(size);
-            long contador = (size / 2) + 1;
             bool teste = true;
+            // para saber matematicamente quem e o vencedor com isso posso decidir se encerro o loop
+            long contador = (size / 2) + 1; 
             long player1 = 0;
             long player2 = 0;
 
@@ -143,15 +97,11 @@ namespace DesafioPlacarGP_Mentes
                 {
                     if (player1 >= contador && teste)
                     {
-                        Console.WriteLine("Jogador 1 e o vencedor, calculando o placar");
-                        Console.WriteLine();
                         contador = 0;
                         teste = false;
                     }
                     else if (player2 >= contador && teste)
                     {
-                        Console.WriteLine("Jogador 2 e o vencedor, calculando o placar");
-                        Console.WriteLine();
                         contador = 0;
                         teste = false;
                     }
@@ -160,69 +110,42 @@ namespace DesafioPlacarGP_Mentes
 
             if ((player1 > player2) && !teste)
             {
-                Console.WriteLine("Jogador 1 placar: {0}  X Jogador 2 placar: {1}", player1, player2);
+                return "Jogador 1 Venceu ";
             }
             else if ((player1 < player2) && !teste)
             {
-                Console.WriteLine("Jogador 2 placar: {0}  X Jogador 1 placar: {1}", player2, player1);
+                return "Jogador 2 Venceu";
             }
             else
             {
-                Console.WriteLine("Empate! -> " + " Jogador 1 placar: {0}  X Jogador 2 placar: {1}", player1, player2);
+                return "Empate! ";
             }
-
-            stopwatch.Stop();
-
-            Console.WriteLine();
-            Console.WriteLine($"Tempo total: {stopwatch.ElapsedMilliseconds} ms");
-            Console.WriteLine();
-            Console.WriteLine("------------------------------ " + DateTime.Now + " ---------------------");
-            Console.WriteLine("Pressione qualquer tecla para retornar ao menu principal");
-            Console.ReadKey();
         }
 
-        public static void PlacarManualJogador()
+        public static string PlacarManualJogador()
         {
-            Console.Clear();
-            Console.WriteLine("------------------------------ Executando placar manual -------------------");
-            Console.WriteLine(      "-------------------------- " + DateTime.Now + " --------------------------");
-            Console.WriteLine();
-
-            Console.WriteLine("Digite uma sequência de 0's para inserir pontos no jogador 1 (ou digite 'fim' para parar):");
-
             long[] player1 =  GravaPlacarJogador(1);
-
-            Console.WriteLine("Digite uma sequência de 1's para inserir pontos no jogador 1 (ou digite 'fim' para parar):");
-
             long[] player2 = GravaPlacarJogador(2);
-
 
             if (player1.LongLength > player2.LongLength)
             {
-                Console.WriteLine("Jogador 1 Venceu com placar: {0}  X Jogador 2 placar: {1}", player1.Length, player2.Length);
+                return "Jogador 1 Venceu ";
             }
             else if (player1.LongLength < player2.LongLength)
             {
-                Console.WriteLine("Jogador 2 Venceu com placar: {0}  X Jogador 1 placar: {1}", player1.Length, player2.Length);
+                return "Jogador 2 Venceu ";
             }
             else
             {
-                Console.WriteLine("Empate! -> " + " Jogador 1 placar: {0}  X Jogador 2 placar: {1}", player1.Length, player2.Length);
+                return "Empate! ";
             }
-
-
-            Console.WriteLine();
-            Console.WriteLine("------------------------------ " + DateTime.Now + " ---------------------");
-            Console.WriteLine("Pressione qualquer tecla para retornar ao menu principal");
-            Console.ReadKey();
-
-
         }
 
         static long[] GravaPlacarJogador(int numeroJogador)
         {
             List<long> vetor = new List<long>();
-            
+            Console.WriteLine("Digite uma sequência de {0}'s para inserir pontos no jogador {1}" +
+                " (ou digite 'fim' para parar):",(numeroJogador -1), numeroJogador);
 
             while ( !((long)vetor.Count > (long.MaxValue - 1)))
             {
@@ -257,6 +180,51 @@ namespace DesafioPlacarGP_Mentes
                 }
             }
             return vetor.ToArray();
+        }
+
+        public static string IdentificaVencedor(long size)
+        {
+            //usando consulta Linq para buscar os dados
+            //precisei dar uma lida na documentação
+            long[] placar = PlacarRandom(size);
+
+            long jogador1 = placar.Count(x => x == 0);
+            long jogador2 = placar.Count(x => x == 1);
+
+            if (jogador1 > jogador2)
+            {
+                return "Jogador 1 Venceu";
+            }
+            else if (jogador1 < jogador2)
+            {
+                return "Jogador 2 Venceu";
+            }
+            else
+            {
+                return "Empate! ";
+            }
+        }
+
+        public static string ProcuraVencedor(long size)
+        {
+            //pelo que entendi quando estava estudando no domindo essa seria uma consulta usando generic
+            long[] placar = PlacarRandom(size);
+
+            long jogador1 = Array.FindAll(placar, x => x == 0).LongLength;
+            long jogador2 = Array.FindAll(placar, x => x == 1).LongLength;
+
+            if (jogador1 > jogador2)
+            {
+                return "Jogador 1 Venceu";
+            }
+            else if (jogador1 < jogador2)
+            {
+                return "Jogador 2 Venceu";
+            }
+            else
+            {
+                return "Empate! ";
+            }
         }
     }
 }
